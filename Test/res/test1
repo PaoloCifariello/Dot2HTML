@@ -1,0 +1,20 @@
+﻿wizard MailSettings {
+	{
+		client: "Client:" ["Thunderbird", "Outlook", "Apple Mail"],
+		type: "Type:" ["POP", "IMAP"]
+	},
+	{
+		port: "Port:" if (type == "POP") {
+			[25, 125]
+		} else {
+			[993, 995]
+		}
+		Security: "Security:" ["None", "SSL"]
+	},
+	{
+		set_client: "Client:" client,
+		set_type: "Type:" type,
+		set_port: "Port:" port,
+		set_security: "Security:" security
+	} 
+}
