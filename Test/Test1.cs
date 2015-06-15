@@ -14,10 +14,10 @@ namespace PA_Final.Test
 
 			var parser = new Parser(test1);
 
-
-            foreach (Token nextToken in parser.Lexer.GetNextToken())
+            int i = 0;
+            foreach (Token nextToken in parser.lexer.GetNextToken())
             {
-                Console.WriteLine(nextToken);
+                Console.WriteLine(i++);
             }
             Console.ReadLine();
 		}

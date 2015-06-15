@@ -9,7 +9,7 @@
 		} else {
 			[993, 995]
 		}
-		Security: "Security:" ["None", "SSL"]
+		security: "Security:" ["None", "SSL"]
 	},
 	{
 		set_client: "Client:" client,

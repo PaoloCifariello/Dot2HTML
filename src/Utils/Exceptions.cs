@@ -2,6 +2,6 @@ using System;
 
 namespace PA_Final.Utils
 {
-	public class NoMoreTokensException : Exception {}
+    public class InvalidInputString : Exception { }
 }
 

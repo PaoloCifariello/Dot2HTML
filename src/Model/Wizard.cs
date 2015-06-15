@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PA_Final.Model
 {
-    class Wizard
+    public class Wizard
     {
     }
 }

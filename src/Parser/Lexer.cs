@@ -5,37 +5,23 @@ namespace PA_Final.Parsing
 {
 	public class Lexer
 	{
-		private string[] splittedString;
+		private string sourceString;
 		private static char[] splitters = {' ', '\n', '\r', '\t'};
 
 		public Lexer (String str)
 		{
-			this.splittedString = str.Split(Lexer.splitters, StringSplitOptions.RemoveEmptyEntries);
-		}
+            this.sourceString = str;
+        }
 
 		public System.Collections.Generic.IEnumerable<Token> GetNextToken() 
 		{
-            int idx;
+            Token nextToken;
 
-            for (idx = 0; idx < splittedString.Length; idx++)
+            while (sourceString.Length != 0)
             {
-                var nextStr = splittedString[idx];
-
-                while (nextStr.Length != 0) {
-                    Token nextToken;
-                
-                    nextStr = GetNextToken(nextStr, out nextToken);
-
-                    yield return nextToken;
-                }
+                sourceString = Matcher.Match(sourceString, out nextToken);
+                yield return nextToken;
             }
 		}
-
-        private string GetNextToken(string nextStr, out Token nextToken)
-        {
-            nextToken = new Token();
-            return "";
-        }
 	}
 }
-
