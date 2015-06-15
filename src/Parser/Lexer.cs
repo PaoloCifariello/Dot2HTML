@@ -6,38 +6,36 @@ namespace PA_Final.Parser
 	public class Lexer
 	{
 		private string[] splittedString;
-		private static char[] splitters = {' ', '\n'};
-		private int nextTokenIndex = 0;
+		private static char[] splitters = {' ', '\n', '\r', '\t'};
 
 		public Lexer (String str)
 		{
-			this.splittedString = str.Split(Lexer.splitters);
+			this.splittedString = str.Split(Lexer.splitters, StringSplitOptions.RemoveEmptyEntries);
 		}
 
-		public Token GetNextToken() 
+		public System.Collections.Generic.IEnumerable<Token> GetNextToken() 
 		{
-			if (nextTokenIndex > splittedString.Length) {
-				throw new NoMoreTokensException ();
-			}
+            int idx;
 
-			var nextStr = splittedString [nextTokenIndex++];
+            for (idx = 0; idx < splittedString.Length; idx++)
+            {
+                var nextStr = splittedString[idx];
 
-//			switch (nextStr) {
-//				case "":
-//					break;
-//				case "":
-//					break;
-//				case "":
-//					break;
-//				case "":
-//					break;
-//				case "":
-//					break;
-//
-//			}
+                while (nextStr.Length != 0) {
+                    Token nextToken;
+                
+                    nextStr = GetNextToken(nextStr, out nextToken);
 
-			return new Token ();
+                    yield return nextToken;
+                }
+            }
 		}
+
+        private string GetNextToken(string nextStr, out Token nextToken)
+        {
+            nextToken = new Token();
+            return "";
+        }
 	}
 }
 
