@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-using PA_Final.Parser;
+using PA_Final.Parsing;
 using PA_Final.Utils;
 
 namespace PA_Final.Test
@@ -12,7 +12,7 @@ namespace PA_Final.Test
 		{
 			var test1 = File.ReadAllText ("../../test/res/test1");
 
-			var parser = new Parser.Parser(test1);
+			var parser = new Parser(test1);
 
 
             foreach (Token nextToken in parser.Lexer.GetNextToken())

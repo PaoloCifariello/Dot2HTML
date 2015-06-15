@@ -1,7 +1,7 @@
 ﻿using System;
 using PA_Final.Utils;
 
-namespace PA_Final.Parser
+namespace PA_Final.Parsing
 {
 	public class Lexer
 	{

@@ -2,7 +2,6 @@
 
 namespace PA_Final.Model
 {
-	
 	public class Property
 	{
 		private string PropertyName;
@@ -12,5 +11,14 @@ namespace PA_Final.Model
 		{
 		}
 	}
+
+    public enum PropertyType
+    {
+        Boolean,
+        String,
+        Integer,
+        Real,
+        Enumeration
+    }
 }
 

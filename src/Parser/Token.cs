@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PA_Final.Parser
+namespace PA_Final.Parsing
 {
 	
 	enum TokenType {
