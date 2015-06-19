@@ -18,11 +18,14 @@ namespace PA_Final.Lexing
 		{
             Token nextToken;
 
+
+			RemoveBlanks();
+
             while (sourceString.Length != 0)
             {
-                RemoveBlanks();
                 sourceString = Matcher.Match(sourceString, out nextToken);
                 yield return nextToken;
+				RemoveBlanks();
             }
 		}
 
@@ -30,14 +33,16 @@ namespace PA_Final.Lexing
         {
             var i = 0;
 
-            while (isBlank(sourceString[i])) { i++; }
 
-            sourceString = sourceString.Substring(0, i);
-        }
+			while (i < sourceString.Length && isBlank(sourceString[i])) { i++; }
+
+            sourceString = sourceString.Substring(i);
+
+		}
 
         private bool isBlank(char c)
         {
-            return Char.is
+			return c == ' ' || c == '\t' || c == '\n' || c == '\r';
         }
 	}
 }

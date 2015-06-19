@@ -16,7 +16,8 @@ namespace PA_Final.Test
 
 			var parser = new Parser(test1);
 
-            int i = 0;
+
+			int i = 0;
             foreach (Token nextToken in parser.lexer.GetNextToken())
             {
                 Console.WriteLine(i++);
