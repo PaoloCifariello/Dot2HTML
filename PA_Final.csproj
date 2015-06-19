@@ -35,14 +35,17 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\Model\Graph.cs" />
     <Compile Include="src\Lexer\Lexer.cs" />
     <Compile Include="src\Lexer\Matcher.cs" />
     <Compile Include="src\Lexer\Token.cs" />
     <Compile Include="src\Parser\Parser.cs" />
     <Compile Include="src\Utils\Exceptions.cs" />
     <Compile Include="Test\Test1.cs" />
-    <Compile Include="src\Model\Statement.cs" />
+    <Compile Include="src\Model\DotGraph.cs" />
+    <Compile Include="src\Model\DotNode.cs" />
+    <Compile Include="src\Model\DotStatement.cs" />
+    <Compile Include="src\Model\DotAttribute.cs" />
+    <Compile Include="src\Model\DotEdge.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

@@ -2,16 +2,16 @@
 
 namespace PA_Final.Model
 {
-	public class Graph
+	public class DotGraph
 	{
 		public GraphType Type;
 		public String ID;
 
-		public Graph ()
+		public DotGraph ()
 		{
 		}
 
-		public void AddStatement (Statement statement)
+		public void AddStatement (DotStatement statement)
 		{
 		}
 	}

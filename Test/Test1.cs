@@ -18,9 +18,12 @@ namespace PA_Final.Test
 			};
 
 			foreach (string test in tests) {
-				var parser = new Parser (test);
 
-				parser.Parse ();
+				var input = File.ReadAllText (test);
+				var parser = new Parser (input);
+
+				var graph = parser.Parse ();
+
 			}
 
 			Console.ReadLine ();

@@ -2,11 +2,8 @@
 
 namespace PA_Final.Model
 {
-	public class Statement
+	public interface DotStatement
 	{
-		public Statement ()
-		{
-		}
 	}
 }
 

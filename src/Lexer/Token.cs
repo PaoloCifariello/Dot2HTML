@@ -37,7 +37,6 @@ namespace PA_Final.Lexing
 		COLON,
 		SEMICOLON,
 		COMMA,
-		STRING,
 		EQUALS,
 
 		GRAPH,

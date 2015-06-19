@@ -53,9 +53,11 @@ namespace PA_Final.Lexing
 					i++;
 				}
 
-				nextToken = new Token (str.Substring (1, i - 1), TokenType.STRING);
+				nextToken = new Token (str.Substring (1, i - 1), TokenType.ID);
 				return str.Substring (i + 1);
 			} else
+
+
 				throw new InvalidInputString ();
 		}
 	}

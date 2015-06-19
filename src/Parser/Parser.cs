@@ -1,6 +1,6 @@
-﻿using PA_Final.Lexing;
+﻿using System;
+using PA_Final.Lexing;
 using PA_Final.Model;
-using System;
 using PA_Final.Utils;
 
 namespace PA_Final.Parsing
@@ -16,13 +16,13 @@ namespace PA_Final.Parsing
 			lookahead = lexer.GetNextToken ();
 		}
 
-		public Graph Parse() {
+		public DotGraph Parse() {
 			return ParseGraph ();
 		}
 
-		private Graph ParseGraph ()
+		private DotGraph ParseGraph ()
 		{
-			var graph = new Graph ();
+			var graph = new DotGraph ();
 			
 			if (lookahead.TokenType == TokenType.GRAPH) {
 				expect (TokenType.GRAPH);
@@ -39,7 +39,7 @@ namespace PA_Final.Parsing
 			expect (TokenType.ID);
 			expect (TokenType.OPEN_BRACKET);
 
-			Statement statement;
+			DotStatement statement;
 
 			while ((statement = ParseStatement()) != null) {
 				graph.AddStatement (statement);
@@ -50,19 +50,80 @@ namespace PA_Final.Parsing
 			return graph;
 		}
 
-		private Statement ParseStatement ()
+		private DotStatement ParseStatement ()
 		{
-			return null;
+			DotStatement statement;
+
+			if (lookahead.TokenType != TokenType.ID)
+				return null;
+			
+			var id = lookahead.Value;
+			expect (TokenType.ID);
+
+			if (lookahead.TokenType == TokenType.UNDIRECTED_EDGE || lookahead.TokenType == TokenType.DIRECTED_EDGE) {
+				statement = ParseEdgeStatement (id);	
+			} else {
+				statement = ParseNodeStatement (id);
+			}
+
+			expect (TokenType.SEMICOLON);
+
+			return statement;
+		}
+
+		private DotStatement ParseNodeStatement(String nodeId) 
+		{
+			DotNode node = new DotNode (nodeId);
+
+			if (lookahead.TokenType == TokenType.OPEN_SQUARE_BRACKET) {
+				expect (TokenType.OPEN_SQUARE_BRACKET);
+			
+				DotAttribute attribute;
+
+				while ((attribute = ParseAttribute ()) != null) {
+					node.addAttribute (attribute);
+				}
+
+				expect (TokenType.CLOSED_SQUARE_BRACKET);
+			}
+
+			return node;
+		}
+
+		private DotAttribute ParseAttribute() 
+		{
+			var key = lookahead.Value;
+
+			expect (TokenType.ID);
+			expect (TokenType.EQUALS);
+
+			var value = lookahead.Value;
+
+			expect(TokenType.ID);
+			expect (TokenType.COMMA);
+
+			return new DotAttribute (key, value);
+		}
+
+		private DotStatement ParseEdgeStatement(String firstNodeId)
+		{
+
+			expect (TokenType.UNDIRECTED_EDGE);
+
+			var secondNodeId = lookahead.Value;
+
+			expect (TokenType.ID);
+
+			return new DotEdge (firstNodeId, secondNodeId);
 		}
 
 		private void expect (TokenType type)
 		{
 			if (lookahead.TokenType != type) {
-				throw new SyntaxException (String.Format ("Expected {{0}}, got {{1}} ", type, lookahead.TokenType));
+				throw new SyntaxException (String.Format ("Expected {0}, got {1} ", type, lookahead.TokenType));
 			}
 
 			lookahead = lexer.GetNextToken ();
 		}
 	}
 }
-
