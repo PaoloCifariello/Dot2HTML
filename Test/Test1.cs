@@ -8,20 +8,22 @@ using PA_Final.Utils;
 
 namespace PA_Final.Test
 {
-    public static class Test1
-    {
-        public static void Test()
-        {
-            var test1 = File.ReadAllText("../../test/res/test1");
+	public static class Test1
+	{
+		public static void Test ()
+		{
+			string[] tests = {
+				//"../../test/res/test1",
+				"../../test/res/test2"
+			};
 
-            var parser = new Parser(test1);
+			foreach (string test in tests) {
+				var parser = new Parser (test);
 
-            Token nextToken;
-            
-            while ((nextToken = parser.lexer.GetNextToken()).TokenType != TokenType.EOF) {
-                Console.WriteLine(nextToken.TokenType);
-            }
-            Console.ReadLine();
-        }
-    }
+				parser.Parse ();
+			}
+
+			Console.ReadLine ();
+		}
+	}
 }

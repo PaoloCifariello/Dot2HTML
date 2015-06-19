@@ -2,13 +2,24 @@
 
 namespace PA_Final.Model
 {
-    public class Graph
-    {
-        private string graphName;
+	public class Graph
+	{
+		public GraphType Type;
+		public String ID;
 
-        public Graph()
-        {
-        }
-    }
+		public Graph ()
+		{
+		}
+
+		public void AddStatement (Statement statement)
+		{
+		}
+	}
+
+	public enum GraphType
+	{
+		UndirectedGraph,
+		DirectedGraph
+	}
 }
 

@@ -42,10 +42,12 @@
     <Compile Include="src\Parser\Parser.cs" />
     <Compile Include="src\Utils\Exceptions.cs" />
     <Compile Include="Test\Test1.cs" />
+    <Compile Include="src\Model\Statement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
   <ItemGroup>
     <None Include="Test\res\test1" />
+    <None Include="Test\res\test2" />
   </ItemGroup>
 </Project>

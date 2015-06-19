@@ -2,46 +2,50 @@
 
 namespace PA_Final.Lexing
 {
-    public class Token
-    {
-        private string value;
-        private TokenType type;
+	public class Token
+	{
+		private string value;
+		private TokenType tokenType;
 
-        public TokenType TokenType
-        {
-          get { return type; }
-        }
+		public string Value {
+			get { return value; }
+		}
 
-        public Token(TokenType type)
-        {
-            this.type = type;
-        }
+		public TokenType TokenType {
+			get { return tokenType; }
+		}
 
-        public Token(string value, TokenType type)
-            : this(type)
-        {
-            this.value = value;
-        }
-    }
+		public Token (TokenType type)
+		{
+			this.tokenType = type;
+		}
 
-    public enum TokenType
-    {
-        OPEN_BRACKET,
-        CLOSED_BRACKET,
-        OPEN_SQUARE_BRACKET,
-        CLOSED_SQUARE_BRACKET,
+		public Token (string value, TokenType type)
+			: this (type)
+		{
+			this.value = value;
+		}
+	}
 
-        COLON,
-        SEMICOLON,
-        COMMA,
-        STRING,
-        EQUALS,
+	public enum TokenType
+	{
+		OPEN_BRACKET,
+		CLOSED_BRACKET,
+		OPEN_SQUARE_BRACKET,
+		CLOSED_SQUARE_BRACKET,
 
-        GRAPH,
-        ID,
-        UNDIRECTED_EDGE,
-        DIRECTED_EDGE,
+		COLON,
+		SEMICOLON,
+		COMMA,
+		STRING,
+		EQUALS,
 
-        EOF
-    }
+		GRAPH,
+		DIGRAPH,
+		ID,
+		UNDIRECTED_EDGE,
+		DIRECTED_EDGE,
+
+		EOF
+	}
 }
