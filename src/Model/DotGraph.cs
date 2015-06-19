@@ -1,4 +1,5 @@
 ﻿using System;
+using C5;
 
 namespace PA_Final.Model
 {
@@ -6,6 +7,7 @@ namespace PA_Final.Model
 	{
 		public GraphType Type;
 		public String ID;
+		public ArrayList<DotStatement> statements = new ArrayList<DotStatement>();
 
 		public DotGraph ()
 		{
@@ -13,6 +15,7 @@ namespace PA_Final.Model
 
 		public void AddStatement (DotStatement statement)
 		{
+			statements.Push (statement);
 		}
 	}
 

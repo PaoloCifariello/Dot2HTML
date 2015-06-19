@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Mono.C5" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -42,10 +43,11 @@
     <Compile Include="src\Utils\Exceptions.cs" />
     <Compile Include="Test\Test1.cs" />
     <Compile Include="src\Model\DotGraph.cs" />
-    <Compile Include="src\Model\DotNode.cs" />
     <Compile Include="src\Model\DotStatement.cs" />
     <Compile Include="src\Model\DotAttribute.cs" />
-    <Compile Include="src\Model\DotEdge.cs" />
+    <Compile Include="src\Model\DotNodeStatement.cs" />
+    <Compile Include="src\Model\DotEdgeStatement.cs" />
+    <Compile Include="src\Model\DotAttributedStatement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

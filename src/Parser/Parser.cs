@@ -2,6 +2,7 @@
 using PA_Final.Lexing;
 using PA_Final.Model;
 using PA_Final.Utils;
+using C5;
 
 namespace PA_Final.Parsing
 {
@@ -73,19 +74,10 @@ namespace PA_Final.Parsing
 
 		private DotStatement ParseNodeStatement(String nodeId) 
 		{
-			DotNode node = new DotNode (nodeId);
+			DotNodeStatement node = new DotNodeStatement (nodeId);
 
-			if (lookahead.TokenType == TokenType.OPEN_SQUARE_BRACKET) {
-				expect (TokenType.OPEN_SQUARE_BRACKET);
-			
-				DotAttribute attribute;
-
-				while ((attribute = ParseAttribute ()) != null) {
-					node.addAttribute (attribute);
-				}
-
-				expect (TokenType.CLOSED_SQUARE_BRACKET);
-			}
+			var attributes = ParseAttributeList ();
+			node.addAttributes (attributes);
 
 			return node;
 		}
@@ -114,7 +106,33 @@ namespace PA_Final.Parsing
 
 			expect (TokenType.ID);
 
-			return new DotEdge (firstNodeId, secondNodeId);
+			var edge = new DotEdgeStatement (firstNodeId, secondNodeId);
+			var attributes = ParseAttributeList ();
+
+			edge.addAttributes (attributes);
+
+			return edge;
+		}
+
+		private ArrayList<DotAttribute> ParseAttributeList()
+		{
+			ArrayList<DotAttribute> attributeList = null;
+
+			if (lookahead.TokenType == TokenType.OPEN_SQUARE_BRACKET) {
+
+				attributeList = new ArrayList<DotAttribute> ();
+				expect (TokenType.OPEN_SQUARE_BRACKET);
+
+				DotAttribute attribute;
+
+				while ((attribute = ParseAttribute ()) != null) {
+					attributeList.Push (attribute);
+				}
+
+				expect (TokenType.CLOSED_SQUARE_BRACKET);
+			}
+
+			return attributeList;
 		}
 
 		private void expect (TokenType type)
