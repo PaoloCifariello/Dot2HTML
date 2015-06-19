@@ -4,19 +4,22 @@ using System;
 
 namespace PA_Final.Parsing
 {
-	public class Parser
-	{
-		public Lexer lexer;
+    public class Parser
+    {
+        public Lexer lexer;
+        private Token lookahead;
 
-		public Parser (String str)
-		{
-			lexer = new Lexer (str);
-		}
-
-        private Property ParseProperty()
+        public Parser(String str)
         {
-            return new Property();
+            lexer = new Lexer(str);
+            lookahead = lexer.GetNextToken();
         }
-	}
+
+        public Graph Parse()
+        {
+
+            return new Graph();
+        }
+    }
 }
 

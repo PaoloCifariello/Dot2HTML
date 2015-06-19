@@ -5,44 +5,42 @@ using PA_Final.Utils;
 
 namespace PA_Final.Lexing
 {
-	public class Lexer
-	{
-		private string sourceString;
+    public class Lexer
+    {
+        private string sourceString;
 
-		public Lexer (String str)
-		{
+        public Lexer(String str)
+        {
             this.sourceString = str;
         }
 
-		public IEnumerable<Token> GetNextToken() 
-		{
+        public Token GetNextToken()
+        {
             Token nextToken;
 
+            RemoveBlanks();
 
-			RemoveBlanks();
-
-            while (sourceString.Length != 0)
-            {
+            if (sourceString.Length == 0) {
+                nextToken = new Token(TokenType.EOF);
+            } else {
                 sourceString = Matcher.Match(sourceString, out nextToken);
-                yield return nextToken;
-				RemoveBlanks();
             }
-		}
+            
+            return nextToken;
+        }
 
         private void RemoveBlanks()
         {
             var i = 0;
 
-
-			while (i < sourceString.Length && isBlank(sourceString[i])) { i++; }
+            while (i < sourceString.Length && isBlank(sourceString[i])) { i++; }
 
             sourceString = sourceString.Substring(i);
-
-		}
+        }
 
         private bool isBlank(char c)
         {
-			return c == ' ' || c == '\t' || c == '\n' || c == '\r';
+            return c == ' ' || c == '\t' || c == '\n' || c == '\r';
         }
-	}
+    }
 }

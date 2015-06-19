@@ -2,21 +2,27 @@
 
 namespace PA_Final.Lexing
 {
-	public class Token
-	{
+    public class Token
+    {
         private string value;
-		private TokenType Type;
+        private TokenType type;
+
+        public TokenType TokenType
+        {
+          get { return type; }
+        }
 
         public Token(TokenType type)
         {
-            this.Type = type;
+            this.type = type;
         }
 
-		public Token (string value, TokenType type) : this(type)
-		{
+        public Token(string value, TokenType type)
+            : this(type)
+        {
             this.value = value;
-		}
-	}
+        }
+    }
 
     public enum TokenType
     {
@@ -34,6 +40,8 @@ namespace PA_Final.Lexing
         GRAPH,
         ID,
         UNDIRECTED_EDGE,
-        DIRECTED_EDGE
+        DIRECTED_EDGE,
+
+        EOF
     }
 }

@@ -28,37 +28,41 @@ namespace PA_Final.Lexing
 
         public static string Match(string str, out Token nextToken)
         {
-			for (var i = 0; i < matches.Length; i++) {
-				if (matches [i].Match (str)) {
-					nextToken = new Token (matches [i].Type);
-					return str.Substring (matches [i].Length);
-				}
-			}
+            for (var i = 0; i < matches.Length; i++) {
+                if (matches[i].Match(str)) {
+                    nextToken = new Token(matches[i].Type);
+                    return str.Substring(matches[i].Length);
+                }
+            }
 
             // Controllo se si tratta di un id char (char|digit) ...
-			if (Char.IsLetter (str [0])) {
-				var i = 1;
+            if (Char.IsLetter(str[0])) {
+                var i = 1;
 
-				while (Char.IsLetterOrDigit (str [i])) { i++; }
+                while (Char.IsLetterOrDigit(str[i])) { i++; }
 
-				nextToken = new Token (str.Substring (0, i), TokenType.ID);
-				return str.Substring (i);
-			} else if (str [0] == '"') {
-				var i = 1;
+                nextToken = new Token(str.Substring(0, i), TokenType.ID);
+                return str.Substring(i);
+            }
+            else if (str[0] == '"') {
+                var i = 1;
 
-				while (str [i] != '"') { i++; }
+                while (str[i] != '"') { i++; }
 
-				nextToken = new Token(str.Substring(1, i - 1), TokenType.STRING);
-				return str.Substring (i + 1);
-			} else 
-				throw new InvalidInputString ();
+                nextToken = new Token(str.Substring(1, i - 1), TokenType.STRING);
+                return str.Substring(i + 1);
+            }
+            else
+                throw new InvalidInputString();
         }
     }
 
     public class Entry
     {
-        public int Length { 
-            get {
+        public int Length
+        {
+            get
+            {
                 return this.match.Length;
             }
         }
@@ -67,14 +71,14 @@ namespace PA_Final.Lexing
         private string match;
 
         public Entry(string match, TokenType type)
-		{
-			this.match = match;
-			this.Type = type;
-		}
+        {
+            this.match = match;
+            this.Type = type;
+        }
 
         public bool Match(string str)
-		{
-			return str.StartsWith (match);
-		}
-	}
+        {
+            return str.StartsWith(match);
+        }
+    }
 }
