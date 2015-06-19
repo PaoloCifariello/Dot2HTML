@@ -1,20 +1,4 @@
-﻿wizard MailSettings {
-	{
-		client: "Client:" ["Thunderbird", "Outlook", "Apple Mail"],
-		type: "Type:" ["POP", "IMAP"]
-	},
-	{
-		port: "Port:" if (type == "POP") {
-			[25, 125]
-		} else {
-			[993, 995]
-		}
-		security: "Security:" ["None", "SSL"]
-	},
-	{
-		set_client: "Client:" client,
-		set_type: "Type:" type,
-		set_port: "Port:" port,
-		set_security: "Security:" security
-	} 
-}
+﻿graph g {
+	n1[label="Person"] -- n2[label="Child"]; n3[label="Nephew"];
+	n1 –- n2[style=dotted, label="Parent"] -- n3;
+}

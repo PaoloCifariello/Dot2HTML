@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PA_Final.Parsing
+namespace PA_Final.Lexing
 {
     public static class Matcher
     {
@@ -16,13 +16,14 @@ namespace PA_Final.Parsing
             new Entry("[", TokenType.OPEN_SQUARE_BRACKET),
             new Entry("]", TokenType.CLOSED_SQUARE_BRACKET),
             new Entry(":", TokenType.COLON),
+            new Entry(";", TokenType.SEMICOLON),
             new Entry(",", TokenType.COMMA),
-            new Entry("if", TokenType.IF),
-            new Entry("else", TokenType.ELSE),
-            new Entry("==", TokenType.EQUALS),
-            new Entry("&&", TokenType.AND),
-            new Entry("||", TokenType.OR),
-            new Entry("!", TokenType.NOT)
+            new Entry("=", TokenType.EQUALS),
+
+            new Entry("--", TokenType.UNDIRECTED_EDGE),
+            new Entry("->", TokenType.DIRECTED_EDGE),
+
+            new Entry("graph", TokenType.GRAPH)
         };
 
         public static string Match(string str, out Token nextToken)
@@ -30,22 +31,23 @@ namespace PA_Final.Parsing
             for (var i = 0; i < matches.Length; i++)
             {
                 if (matches[i].Match(str))
-                {   
+                {
                     nextToken = new Token(matches[i].Type);
                     return str.Substring(matches[i].Length);
                 }
             }
 
-            // Controllo se si tratta di una stringa della forma "..."
-            if (str[0] == '"')
+            // Controllo se si tratta di un id char (char|digit) ...
+            if (Char.IsLetter(str[0]))
             {
-                var ei = str.IndexOf('"', 1);
+                var i = 1;
 
-                nextToken = new Token(str.Substring(0, ei), TokenType.STRING);
-                return str.Substring(ei + 1);
-            }
+                while (Char.IsLetterOrDigit(str[i])) { i++; }
 
-            throw new InvalidInputString();
+                nextToken = new Token(str.Substring(0, i), TokenType.ID);
+                return str.Substring(i);
+            } else
+                throw new InvalidInputString();
         }
     }
 
@@ -57,13 +59,13 @@ namespace PA_Final.Parsing
             }
         }
 
+        public TokenType Type;
         private string match;
-        public TokenType type;
 
         public Entry(string match, TokenType type)
         {
             this.match = match;
-            this.type = type;
+            this.Type = type;
         }
 
         public bool Match(string str)

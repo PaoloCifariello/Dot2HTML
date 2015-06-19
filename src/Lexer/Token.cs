@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PA_Final.Parsing
+namespace PA_Final.Lexing
 {
 	public class Token
 	{
@@ -18,22 +18,22 @@ namespace PA_Final.Parsing
 		}
 	}
 
-    enum TokenType
+    public enum TokenType
     {
         OPEN_BRACKET,
         CLOSED_BRACKET,
         OPEN_SQUARE_BRACKET,
         CLOSED_SQUARE_BRACKET,
+
         COLON,
+        SEMICOLON,
         COMMA,
         STRING,
-        IF,
-        ELSE
         EQUALS,
-        AND,
-        OR,
-        NOT,
 
-
+        GRAPH,
+        ID,
+        UNDIRECTED_EDGE,
+        DIRECTED_EDGE
     }
 }

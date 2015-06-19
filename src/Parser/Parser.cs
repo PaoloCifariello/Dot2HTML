@@ -1,4 +1,5 @@
-﻿using PA_Final.Model;
+﻿using PA_Final.Lexing;
+using PA_Final.Model;
 using System;
 
 namespace PA_Final.Parsing
@@ -11,16 +12,6 @@ namespace PA_Final.Parsing
 		{
 			lexer = new Lexer (str);
 		}
-
-        public Wizard Parse()
-        {
-            return ParseWizard();
-        }
-
-        private Wizard ParseWizard() 
-        {
-            return new Wizard();
-        }
 
         private Property ParseProperty()
         {
