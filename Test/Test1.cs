@@ -14,7 +14,8 @@ namespace PA_Final.Test
 		{
 			string[] tests = {
 				//"../../test/res/test1",
-				"../../test/res/test2"
+				"../../test/res/t" +
+				"est2"
 			};
 
 			foreach (string test in tests) {
@@ -23,6 +24,7 @@ namespace PA_Final.Test
 				var parser = new Parser (input);
 
 				var graph = parser.Parse ();
+
 
 			}
 

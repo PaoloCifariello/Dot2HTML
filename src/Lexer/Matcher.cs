@@ -22,13 +22,18 @@ namespace PA_Final.Lexing
 
 			new Entry ("--", TokenType.UNDIRECTED_EDGE),
 			new Entry ("->", TokenType.DIRECTED_EDGE),
+		};
 
+		private static Entry[] reservedWords = new Entry[] {
 			new Entry ("graph", TokenType.GRAPH),
 			new Entry ("digraph", TokenType.DIGRAPH)
 		};
 
 		public static string Match (string str, out Token nextToken)
 		{
+
+			nextToken = null;
+
 			for (var i = 0; i < matches.Length; i++) {
 				if (matches [i].Match (str)) {
 					nextToken = new Token (matches [i].Type);
@@ -37,15 +42,26 @@ namespace PA_Final.Lexing
 			}
 
 			// Controllo se si tratta di un id char (char|digit) ...
+
 			if (Char.IsLetter (str [0])) {
 				var i = 1;
 
-				while (Char.IsLetterOrDigit (str [i])) {
+				while (i < str.Length && Char.IsLetterOrDigit (str [i])) {
 					i++;
 				}
 
-				nextToken = new Token (str.Substring (0, i), TokenType.ID);
-				return str.Substring (i);
+				var word = str.Substring (0, i);
+
+				for (i = 0; i < reservedWords.Length; i++) {
+					if (reservedWords [i].Equals (word))
+						nextToken = new Token (reservedWords [i].Type);
+				}
+
+				if (nextToken == null)
+					nextToken = new Token (word, TokenType.ID);
+				
+				return str.Substring (word.Length);
+
 			} else if (str [0] == '"') {
 				var i = 1;
 
@@ -56,8 +72,6 @@ namespace PA_Final.Lexing
 				nextToken = new Token (str.Substring (1, i - 1), TokenType.ID);
 				return str.Substring (i + 1);
 			} else
-
-
 				throw new InvalidInputString ();
 		}
 	}
@@ -82,6 +96,11 @@ namespace PA_Final.Lexing
 		public bool Match (string str)
 		{
 			return str.StartsWith (match);
+		}
+
+		public bool Equals(String str)
+		{
+			return str.Equals (match);
 		}
 	}
 }
