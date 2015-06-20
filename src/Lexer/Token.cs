@@ -4,7 +4,7 @@ namespace PA_Final.Lexing
 {
 	public class Token
 	{
-		private string value;
+		private String value;
 		private TokenType tokenType;
 
 		public string Value {

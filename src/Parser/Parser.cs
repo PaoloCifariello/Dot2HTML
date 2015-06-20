@@ -99,14 +99,19 @@ namespace PA_Final.Parsing
 
 		private DotStatement ParseEdgeStatement(String firstNodeId)
 		{
+			var edge = new DotEdgeStatement();
 
-			expect (TokenType.UNDIRECTED_EDGE);
+			edge.AddNode (firstNodeId);
 
-			var secondNodeId = lookahead.Value;
+			do {
+				expect (TokenType.UNDIRECTED_EDGE);
 
-			expect (TokenType.ID);
+				var nodeId = lookahead.Value;
+				expect (TokenType.ID);
+				edge.AddNode(nodeId);
 
-			var edge = new DotEdgeStatement (firstNodeId, secondNodeId);
+			} while (lookahead.TokenType == TokenType.UNDIRECTED_EDGE);
+				
 			var attributes = ParseAttributeList ();
 
 			edge.addAttributes (attributes);
