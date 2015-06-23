@@ -53,5 +53,7 @@
 	
 	DD.drawGraph = function(graph, canvasId) {
 		canvasId = typeof canvasId === 'undefined' ? drawingCanvasId : canvasId;
+
+		var canvas = document.getElementById(canvasId);
 	};
 })();
