@@ -1,7 +1,7 @@
 ﻿using System;
 using C5;
 
-using PA_Final.Lexing;
+using PA_Final.Scanning;
 using PA_Final.Model;
 using PA_Final.Utils;
 
@@ -9,12 +9,12 @@ namespace PA_Final.Parsing
 {
 	public class Parser
 	{
-		public Lexer lexer;
+		public Scanner lexer;
 		private Token lookahead;
 
 		public Parser (String str)
 		{
-			lexer = new Lexer (str);
+			lexer = new Scanner (str);
 			lookahead = lexer.GetNextToken ();
 		}
 

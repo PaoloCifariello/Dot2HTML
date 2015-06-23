@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PA_Final.Lexing
+namespace PA_Final.Scanning
 {
 	public class Token
 	{

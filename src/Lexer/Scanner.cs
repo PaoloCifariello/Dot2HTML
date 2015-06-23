@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using PA_Final.Utils;
 
 
-namespace PA_Final.Lexing
+namespace PA_Final.Scanning
 {
-	public class Lexer
+	public class Scanner
 	{
 		private string sourceString;
 
-		public Lexer (String str)
+		public Scanner (String str)
 		{
 			this.sourceString = str;
 		}

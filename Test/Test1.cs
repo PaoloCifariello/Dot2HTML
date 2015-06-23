@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-using PA_Final.Lexing;
+using PA_Final.Scanning;
 using PA_Final.Parsing;
 using PA_Final.Utils;
 

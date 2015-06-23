@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PA_Final.Lexing
+namespace PA_Final.Scanning
 {
 	public static class Matcher
 	{
