@@ -25,11 +25,9 @@ namespace PA_Final.Parsing
 
 		private DotGraph ParseGraph ()
 		{
-			var graph = new DotGraph ();
-
 			expect (TokenType.GRAPH);
 
-			graph.ID = lookahead.Value;
+			var graph = new DotGraph (lookahead.Value);
 
 			expect (TokenType.ID);
 			expect (TokenType.OPEN_BRACKET);

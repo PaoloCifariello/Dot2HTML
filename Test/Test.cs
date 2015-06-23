@@ -4,6 +4,7 @@ using System.IO;
 using PA_Final.Scanning;
 using PA_Final.Parsing;
 using PA_Final.Utils;
+using PA_Final.HTML;
 
 
 namespace PA_Final.Test
@@ -24,10 +25,9 @@ namespace PA_Final.Test
 
 				var graph = parser.Parse ();
 
-
+				var html = HTMLGenerator.GenerateHTML (graph);
+				File.WriteAllText (String.Format("../../test/out/{0}.html", test[test.Length - 1]), html);
 			}
-
-			Console.ReadLine ();
 		}
 	}
 }

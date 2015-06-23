@@ -7,6 +7,12 @@ namespace PA_Final.Model
 	{
 		private ArrayList<DotEdge> edges;
 
+		public ArrayList<DotEdge> Edges {
+			get {
+				return edges;
+			}
+		}
+
 		public DotEdgeStatement (ArrayList<DotEdge> edges)
 		{
 			this.edges = edges;

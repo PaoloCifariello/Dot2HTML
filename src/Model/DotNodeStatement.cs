@@ -7,6 +7,12 @@ namespace PA_Final.Model
 	{
 		private DotNode node;
 
+		public DotNode Node {
+			get {
+				return node;
+			}
+		}
+
 		public DotNodeStatement (DotNode node)
 		{
 			this.node = node;

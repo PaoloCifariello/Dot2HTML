@@ -7,7 +7,7 @@ using PA_Final.Utils;
 
 namespace PA_Final.Model
 {
-	public class DotEdge : DotAttributedElement
+	public class DotEdge : DotElement
 	{
 		private String fromId;
 		private String toId;

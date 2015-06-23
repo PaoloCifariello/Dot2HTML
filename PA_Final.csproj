@@ -44,17 +44,24 @@
     <Compile Include="src\Model\DotEdge.cs" />
     <Compile Include="src\Model\DotNode.cs" />
     <Compile Include="src\Model\IDotStatement.cs" />
-    <Compile Include="src\Model\DotAttributedElement.cs" />
     <Compile Include="src\Scanning\Matcher.cs" />
     <Compile Include="src\Scanning\Token.cs" />
     <Compile Include="src\Scanning\Scanner.cs" />
     <Compile Include="src\Parsing\Parser.cs" />
     <Compile Include="test\Test.cs" />
+    <Compile Include="src\HTML\HTMLGenerator.cs" />
+    <Compile Include="src\Model\DotElement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
   <ItemGroup>
     <None Include="test\res\test1" />
     <None Include="test\res\test2" />
+    <None Include="src\HTML\Template.html" />
+    <None Include="src\HTML\DotGenerator.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\HTML\" />
+    <Folder Include="test\out\" />
   </ItemGroup>
 </Project>
