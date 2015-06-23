@@ -2,7 +2,7 @@
 
 namespace PA_Final.Model
 {
-	public interface DotStatement
+	public interface IDotStatement
 	{
 	}
 }

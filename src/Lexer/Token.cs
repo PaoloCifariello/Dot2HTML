@@ -40,10 +40,8 @@ namespace PA_Final.Scanning
 		EQUALS,
 
 		GRAPH,
-		DIGRAPH,
 		ID,
-		UNDIRECTED_EDGE,
-		DIRECTED_EDGE,
+		EDGE,
 
 		EOF
 	}

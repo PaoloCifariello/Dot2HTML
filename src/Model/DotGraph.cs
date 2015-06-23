@@ -5,24 +5,16 @@ namespace PA_Final.Model
 {
 	public class DotGraph
 	{
-		public GraphType Type;
 		public String ID;
-		public ArrayList<DotStatement> statements = new ArrayList<DotStatement>();
+		public ArrayList<IDotStatement> statements = new ArrayList<IDotStatement>();
 
 		public DotGraph ()
 		{
 		}
 
-		public void AddStatement (DotStatement statement)
+		public void AddStatement (IDotStatement statement)
 		{
 			statements.Push (statement);
 		}
 	}
-
-	public enum GraphType
-	{
-		UndirectedGraph,
-		DirectedGraph
-	}
 }
-

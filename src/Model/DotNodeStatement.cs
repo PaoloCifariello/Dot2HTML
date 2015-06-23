@@ -3,13 +3,13 @@ using C5;
 
 namespace PA_Final.Model
 {
-	public class DotNodeStatement : DotAttributedStatement
+	public class DotNodeStatement : IDotStatement
 	{
-		private String id;
+		private DotNode node;
 
-		public DotNodeStatement (String nodeId)
+		public DotNodeStatement (DotNode node)
 		{
-			id = nodeId;
+			this.node = node;
 		}
 	}
 }

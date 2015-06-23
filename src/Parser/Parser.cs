@@ -26,25 +26,15 @@ namespace PA_Final.Parsing
 		private DotGraph ParseGraph ()
 		{
 			var graph = new DotGraph ();
-			
 
-
-			if (lookahead.TokenType == TokenType.GRAPH) {
-				expect (TokenType.GRAPH);
-
-				graph.Type = GraphType.UndirectedGraph;
-			} else {
-				expect (TokenType.DIGRAPH);
-
-				graph.Type = GraphType.DirectedGraph;
-			}
+			expect (TokenType.GRAPH);
 
 			graph.ID = lookahead.Value;
 
 			expect (TokenType.ID);
 			expect (TokenType.OPEN_BRACKET);
 
-			DotStatement statement;
+			IDotStatement statement;
 
 			while ((statement = ParseStatement ()) != null) {
 				graph.AddStatement (statement);
@@ -55,9 +45,9 @@ namespace PA_Final.Parsing
 			return graph;
 		}
 
-		private DotStatement ParseStatement ()
+		private IDotStatement ParseStatement ()
 		{
-			DotStatement statement;
+			IDotStatement statement;
 
 			if (lookahead.TokenType != TokenType.ID)
 				return null;
@@ -65,7 +55,7 @@ namespace PA_Final.Parsing
 			var id = lookahead.Value;
 			expect (TokenType.ID);
 
-			if (lookahead.TokenType == TokenType.UNDIRECTED_EDGE || lookahead.TokenType == TokenType.DIRECTED_EDGE) {
+			if (lookahead.TokenType == TokenType.EDGE) {
 				statement = ParseEdgeStatement (id);	
 
 			} else {
@@ -77,36 +67,58 @@ namespace PA_Final.Parsing
 			return statement;
 		}
 
-		private DotStatement ParseNodeStatement (String nodeId)
+		private IDotStatement ParseNodeStatement (String nodeId)
 		{
-			DotNodeStatement node = new DotNodeStatement (nodeId);
-
 			var attributes = ParseAttributeList ();
-			node.addAttributes (attributes);
 
-			return node;
+			var node = new DotNode (nodeId, attributes);
+
+			return new DotNodeStatement (node);
 		}
 
-	
-
-		private DotStatement ParseEdgeStatement (String firstNodeId)
+		private IDotStatement ParseEdgeStatement (String fromNodeId)
 		{
-			var edge = new DotEdgeStatement ();
+			ArrayList<DotEdge> edges = new ArrayList<DotEdge> ();
+			ArrayList<DotEdge> currentEdges = new ArrayList<DotEdge> ();
 
-			edge.AddNode (firstNodeId);
+			DotEdge currentEdge;
+			var noMoreEdges = false;
 
-			do {
-				expect (TokenType.UNDIRECTED_EDGE);
+			while (noMoreEdges == false) {
+				while ((currentEdge = ParseEdge (fromNodeId)) != null) {
+					currentEdges.Push (currentEdge);
+					fromNodeId = currentEdge.ToNodeId;
+				}
 
-				var nodeId = lookahead.Value;
+				var attributes = ParseAttributeList ();
+
+
+				if (attributes != null) {
+					foreach (var edge in currentEdges)
+						edge.SetAttributes (attributes);
+				} else {
+					noMoreEdges = true;
+				}
+
+				edges.AddAll (currentEdges);
+				currentEdges.Clear ();
+			}
+
+			return new DotEdgeStatement (edges);
+		}
+
+		private DotEdge ParseEdge(String fromNodeId)
+		{
+			DotEdge edge = null;
+
+			if (lookahead.TokenType == TokenType.EDGE) {
+
+				expect (TokenType.EDGE);
+
+				var toNodeId = lookahead.Value;
 				expect (TokenType.ID);
-				edge.AddNode (nodeId);
-
-			} while (lookahead.TokenType == TokenType.UNDIRECTED_EDGE);
-				
-			var attributes = ParseAttributeList ();
-
-			edge.addAttributes (attributes);
+				edge = new DotEdge (fromNodeId, toNodeId);
+			}
 
 			return edge;
 		}
@@ -153,9 +165,8 @@ namespace PA_Final.Parsing
 
 		private void expect (TokenType type)
 		{
-			if (lookahead.TokenType != type) {
+			if (lookahead.TokenType != type)
 				throw new SyntaxException (String.Format ("Expected {0}, got {1} ", type, lookahead.TokenType));
-			}
 
 			lookahead = lexer.GetNextToken ();
 		}

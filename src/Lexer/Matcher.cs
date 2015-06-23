@@ -20,13 +20,11 @@ namespace PA_Final.Scanning
 			new Entry (",", TokenType.COMMA),
 			new Entry ("=", TokenType.EQUALS),
 
-			new Entry ("--", TokenType.UNDIRECTED_EDGE),
-			new Entry ("->", TokenType.DIRECTED_EDGE),
+			new Entry ("--", TokenType.EDGE),
 		};
 
 		private static Entry[] reservedWords = new Entry[] {
 			new Entry ("graph", TokenType.GRAPH),
-			new Entry ("digraph", TokenType.DIGRAPH)
 		};
 
 		public static string Match (string str, out Token nextToken)

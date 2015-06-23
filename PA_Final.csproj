@@ -40,14 +40,16 @@
     <Compile Include="src\Lexer\Token.cs" />
     <Compile Include="src\Parser\Parser.cs" />
     <Compile Include="src\Utils\Exceptions.cs" />
-    <Compile Include="Test\Test1.cs" />
     <Compile Include="src\Model\DotGraph.cs" />
-    <Compile Include="src\Model\DotStatement.cs" />
     <Compile Include="src\Model\DotAttribute.cs" />
     <Compile Include="src\Model\DotNodeStatement.cs" />
     <Compile Include="src\Model\DotEdgeStatement.cs" />
-    <Compile Include="src\Model\DotAttributedStatement.cs" />
     <Compile Include="src\Lexer\Scanner.cs" />
+    <Compile Include="Test\Test.cs" />
+    <Compile Include="src\Model\DotEdge.cs" />
+    <Compile Include="src\Model\DotNode.cs" />
+    <Compile Include="src\Model\IDotStatement.cs" />
+    <Compile Include="src\Model\DotAttributedElement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

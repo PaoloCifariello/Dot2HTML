@@ -3,13 +3,13 @@ using C5;
 
 namespace PA_Final.Model
 {
-	public class DotEdgeStatement : DotAttributedStatement
+	public class DotEdgeStatement : IDotStatement
 	{
-		private ArrayList<String> nodes = new ArrayList<String>();
-		
-		public void AddNode (String nodeId)
+		private ArrayList<DotEdge> edges;
+
+		public DotEdgeStatement (ArrayList<DotEdge> edges)
 		{
-			nodes.Push (nodeId);
+			this.edges = edges;
 		}
 	}
 }
