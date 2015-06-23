@@ -17,10 +17,9 @@ namespace PA_Final.Model
 			}
 		}
 
-		public DotNode (String id, ArrayList<DotAttribute> attributes)
+		public DotNode (String id)
 		{
 			this.id = id;
-			this.attributes = attributes;
 		}
 	}
 

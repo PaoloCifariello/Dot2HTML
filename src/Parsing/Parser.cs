@@ -67,9 +67,10 @@ namespace PA_Final.Parsing
 
 		private IDotStatement ParseNodeStatement (String nodeId)
 		{
+			var node = new DotNode (nodeId);
 			var attributes = ParseAttributeList ();
 
-			var node = new DotNode (nodeId, attributes);
+			node.SetAttributes (attributes);
 
 			return new DotNodeStatement (node);
 		}

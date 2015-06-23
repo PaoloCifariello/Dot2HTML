@@ -1,24 +1,26 @@
 (function() {
 	DD = typeof DD === 'undefined' ? function(){} : DD;
 	
-	function Node(nodeId, attributes) {
+	function DotNode(nodeId, attributes) {
 		this.id = nodeId;
 		this.attributes = attributes;
 	}
 	
-	function Edge(fromNode, toNode, attributes) {
+	function DotEdge(fromNode, toNode, attributes) {
 		this.fromNode = fromNode;
 		this.toNode = toNode;
 		this.attributes = attributes;
 	}
 	
-	function Graph() {
+	function DotGraph() {
 		
 		this.nodes = [];
 		this.edges = [];
 		
 		this.addNode = function(nodeId, attributes) {
-			this.nodes.push(new Node(nodeId, attributes));
+			var node = new DotNode(nodeId, attributes);
+			this.nodes.push(node);
+			return node;
 		};
 		
 		this.addEdge = function(fromNodeId, toNodeId, attributes) {
@@ -32,19 +34,19 @@
 			})[0];
 			
 			if (typeof fromNode === 'undefined')
-				fromNode = new Node(fromNodeId, {});
+				fromNode = this.addNode(fromNodeId, {})
 				
 			if (typeof toNode === 'undefined')
-				toNode = new Node(toNodeId, {});
+				toNode = this.addNode(toNodeId, {});
 				
-			this.edges.push(new Edge(fromNode, toNode, attributes));
+			this.edges.push(new DotEdge(fromNode, toNode, attributes));
 		};
 	}
-	
+		
 	var drawingCanvasId;
 
 	DD.createGraph = function() {
-		return new Graph();
+		return new DotGraph();
 	};
 	
 	DD.setDrawingCanvas = function(canvasId) {
@@ -55,5 +57,22 @@
 		canvasId = typeof canvasId === 'undefined' ? drawingCanvasId : canvasId;
 
 		var canvas = document.getElementById(canvasId);
+
+		if (typeof canvas === 'undefined') {
+			console.error("Cannot find canvas " + canvasId);
+			return;
+		}
+
+		var ctx = canvas.getContext('2d');
+
+		graph.nodes.forEach(function(node) {
+
+		});
 	};
+
+
+
+
+
+
 })();

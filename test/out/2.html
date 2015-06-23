@@ -4,7 +4,7 @@
 		<script type="text/javascript" src="DotGenerator.js"></script>
 	</head>
 	<body>
-		<canvas id="graph"></canvas>
+		<canvas id="graphCanvas"></canvas>
 
 		<script>
 			var graph = DD.createGraph();
@@ -23,6 +23,8 @@ color : "blue"
 graph.addEdge("b", "d", {
 style : "dotted"
 })
+DD.setDrawingCanvas("graphCanvas");
+DD.drawGraph(graph);
 		</script>
 	</body>
 </html>

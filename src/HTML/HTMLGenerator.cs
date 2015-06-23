@@ -26,7 +26,11 @@ namespace PA_Final.HTML
 				foreach (var edge in edgeStatement.Edges)
 					GenerateEdgeCode (edge, drawingCode);
 
+			drawingCode.Push ("DD.setDrawingCanvas(\"graphCanvas\");");
+			drawingCode.Push ("DD.drawGraph(graph);");
+
 			var generatedCode = String.Format (htmlTemplate, String.Join ("\n", drawingCode));
+
 
 			return generatedCode;
 		}
