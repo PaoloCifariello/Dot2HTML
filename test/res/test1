@@ -1,0 +1,4 @@
+﻿graph g {
+	n1[label="Person"]; n2[label="Child"]; n3[label="Nephew"];
+	n1 -- n2 -- n3 [style=dotted, label="Parent"];
+}
