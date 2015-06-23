@@ -1,18 +1,48 @@
 (function() {
 	DD = typeof DD === 'undefined' ? function(){} : DD;
 	
+	function Node(nodeId, attributes) {
+		this.id = nodeId;
+		this.attributes = attributes;
+	}
+	
+	function Edge(fromNode, toNode, attributes) {
+		this.fromNode = fromNode;
+		this.toNode = toNode;
+		this.attributes = attributes;
+	}
+	
 	function Graph() {
-		this.addNode = function(nodeId) {
-			
+		
+		this.nodes = [];
+		this.edges = [];
+		
+		this.addNode = function(nodeId, attributes) {
+			this.nodes.push(new Node(nodeId, attributes));
 		};
 		
-		this.addEdge = function(fromNode, toNode) {
+		this.addEdge = function(fromNodeId, toNodeId, attributes) {
 			
+			var fromNode = this.nodes.filter(function(node) {
+				return node.id === fromNodeId;
+			})[0];
+
+			var toNode = this.nodes.filter(function(node) {
+				return node.id === toNodeId;
+			})[0];
+			
+			if (typeof fromNode === 'undefined')
+				fromNode = new Node(fromNodeId, {});
+				
+			if (typeof toNode === 'undefined')
+				toNode = new Node(toNodeId, {});
+				
+			this.edges.push(new Edge(fromNode, toNode, attributes));
 		};
 	}
 	
 	var drawingCanvasId;
-	
+
 	DD.createGraph = function() {
 		return new Graph();
 	};
