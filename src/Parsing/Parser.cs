@@ -36,10 +36,9 @@ namespace PA_Final.Parsing
 			expect (TokenType.ID);
 			expect (TokenType.OPEN_BRACKET);
 
-			IDotStatement statement;
-
-			while ((statement = ParseStatement ()) != null) {
-				graph.AddStatement (statement);
+			while (lookahead.TokenType != TokenType.CLOSED_BRACKET) {
+				var nextStatement = ParseStatement ();
+				graph.AddStatement (nextStatement);
 			}
 
 			expect (TokenType.CLOSED_BRACKET);
@@ -70,11 +69,11 @@ namespace PA_Final.Parsing
 
 				expect (TokenType.SEMICOLON);
 				break;
-
+			
 			default:
-				statement = null;
-				break;
+				throw new SyntaxException(String.Format("Cannot recognize statement starting with: {0}", lookahead.TokenType));
 			}
+
 
 			return statement;
 		}
