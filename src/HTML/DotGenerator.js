@@ -59,7 +59,7 @@
 	};
 	
 	DD.setDrawingCanvas = function(canvasId) {
-		drawingCanvasId = canvasId;	
+		drawingCanvasId = canvasId;
 	};
 	
 	DD.drawGraph = function(graph, canvasId) {
@@ -77,12 +77,50 @@
 			y: 1
 		});
 		drawer.drawGraph(canvas, graph);
+
+		var canvas = document.getElementById(drawingCanvasId);
+
+		setCanvasHandler(canvas, graph, drawer);
 	};
+
+	function setCanvasHandler(canvas, graph, drawer) {
+		var selectedNode = undefined;
+
+		canvas.addEventListener('mousedown', function(e){
+			var selectedNodes = graph.nodes.filter(function(node) {
+				var x = e.offsetX,
+					y = e.offsetY,
+					nodeX = node.position.x,
+					nodeY = node.position.y,
+					radius = node.radius;
+
+				return x <= nodeX + radius &&  nodeX - radius <= x
+						&& y <= nodeY + radius &&  nodeY - radius <= y;
+			});
+
+			if (selectedNodes.length > 0)
+				selectedNode = selectedNodes[0];
+		});
+
+		canvas.addEventListener('mousemove', function(e) {
+			if (!selectedNode)
+				return;
+
+			selectedNode.position.x = e.offsetX;
+			selectedNode.position.y = e.offsetY;
+
+			drawer.drawGraph(canvas, graph);
+		});
+
+		canvas.addEventListener('mouseup', function(e) {
+			selectedNode = undefined;
+		});
+	}
 
 	function Drawer() {
 
 		var xStep = 90, yStep = 90;
-		var radius = 28;
+		var defaultRadius = 28;
 
 		this.calculatePositions = function(nodes, startingSlot) {
 			var self = this;
@@ -93,6 +131,7 @@
 						x: startingSlot.x * xStep,
 						y: startingSlot.y * yStep
 					};
+					node.radius = defaultRadius;
 
 					self.calculatePositions(node.links, {
 						x: startingSlot.x,
@@ -106,6 +145,8 @@
 
 		this.drawGraph = function(canvas, graph) {
 			var ctx = canvas.getContext('2d');
+
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 			graph.edges.forEach(function(edge) {
 				drawEdge(ctx, edge);
@@ -126,7 +167,7 @@
 			setLineStyle(ctx, style);
 
 			ctx.beginPath();
-			ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+			ctx.arc(centerX, centerY, node.radius, 0, 2 * Math.PI, false);
 			ctx.fillStyle = 'white';
 			ctx.lineWidth = 2;
 			ctx.fill();
@@ -174,5 +215,9 @@
 					break;
 			}
 		}
+	}
+
+	function onMouseMove(e) {
+
 	}
 })();
