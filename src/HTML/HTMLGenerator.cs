@@ -52,12 +52,12 @@ namespace PA_Final.HTML
 
 		private static String GenerateAttributeCode (ArrayList<DotAttribute> attributes)
 		{
+			
 			var attributesJSON = new ArrayList<String> () {
 				"{"
 			};
-
-
-			if (attributes.Count > 0) {
+				
+			if (attributes != null && attributes.Count > 0) {
 				
 				for (var i = 0; i < attributes.Count - 1; i++) {
 					attributesJSON.Push (String.Format ("{0} : \"{1}\",", attributes [i].Key, attributes [i].Value));

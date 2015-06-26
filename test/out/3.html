@@ -8,22 +8,17 @@
 
 		<script>
 			var graph = DD.createGraph();
-graph.addNode("n1", {
-label : "Person"
-});
-graph.addNode("n2", {
-label : "Child"
-});
-graph.addNode("n3", {
-label : "Nephew"
-});
 graph.addEdge("n1", "n2", {
-style : "dotted",
-label : "Parent"
 })
 graph.addEdge("n2", "n3", {
-style : "dotted",
-label : "Parent"
+})
+graph.addEdge("n3", "n4", {
+})
+graph.addEdge("n3", "n5", {
+})
+graph.addEdge("n5", "n6", {
+})
+graph.addEdge("n6", "n7", {
 })
 DD.setDrawingCanvas("graphCanvas");
 DD.drawGraph(graph);
