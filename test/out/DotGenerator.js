@@ -162,10 +162,9 @@
 		}
 
 		function setLineStyle(ctx, style) {
-
 			switch (style) {
 				case 'dashed':
-					ctx.setLineDash([5]);
+					ctx.setLineDash([5]); 
 					break;
 				case 'dotted':
 					ctx.setLineDash([1, 2]);
@@ -176,5 +175,4 @@
 			}
 		}
 	}
-
 })();

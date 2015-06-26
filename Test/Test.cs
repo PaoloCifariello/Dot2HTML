@@ -16,7 +16,8 @@ namespace PA_Final.Test
 			string[] tests = {
 				"../../test/res/test1",
 				"../../test/res/test2",
-				"../../test/res/test3"
+				"../../test/res/test3",
+				"../../test/res/test4"
 			};
 
 			foreach (string test in tests) {

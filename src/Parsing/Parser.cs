@@ -20,13 +20,17 @@ namespace PA_Final.Parsing
 
 		public DotGraph Parse ()
 		{
-			return ParseGraph ();
+			expect (TokenType.GRAPH);
+
+			var graph = ParseGraph ();
+
+			expect (TokenType.EOF);
+
+			return graph;
 		}
 
 		private DotGraph ParseGraph ()
 		{
-			expect (TokenType.GRAPH);
-
 			var graph = new DotGraph (lookahead.Value);
 
 			expect (TokenType.ID);
@@ -47,20 +51,30 @@ namespace PA_Final.Parsing
 		{
 			IDotStatement statement;
 
-			if (lookahead.TokenType != TokenType.ID)
-				return null;
-			
-			var id = lookahead.Value;
-			expect (TokenType.ID);
+			switch (lookahead.TokenType) {
+				
+			case TokenType.CLUSTER:
+				statement = ParseCluster ();
+				break;
 
-			if (lookahead.TokenType == TokenType.EDGE) {
-				statement = ParseEdgeStatement (id);	
+			case TokenType.ID:
+				var id = lookahead.Value;
+				expect (TokenType.ID);
 
-			} else {
-				statement = ParseNodeStatement (id);
+				if (lookahead.TokenType == TokenType.EDGE) {
+					statement = ParseEdgeStatement (id);	
+
+				} else {
+					statement = ParseNodeStatement (id);
+				}
+
+				expect (TokenType.SEMICOLON);
+				break;
+
+			default:
+				statement = null;
+				break;
 			}
-
-			expect (TokenType.SEMICOLON);
 
 			return statement;
 		}
@@ -106,7 +120,7 @@ namespace PA_Final.Parsing
 			return new DotEdgeStatement (edges);
 		}
 
-		private DotEdge ParseEdge(String fromNodeId)
+		private DotEdge ParseEdge (String fromNodeId)
 		{
 			DotEdge edge = null;
 
@@ -168,6 +182,16 @@ namespace PA_Final.Parsing
 				throw new SyntaxException (String.Format ("Expected {0}, got {1} ", type, lookahead.TokenType));
 
 			lookahead = lexer.GetNextToken ();
+		}
+
+
+		private IDotStatement ParseCluster ()
+		{
+			expect (TokenType.CLUSTER);
+
+			var graph = ParseGraph ();
+
+			return new DotClusterStatement (graph);
 		}
 	}
 }

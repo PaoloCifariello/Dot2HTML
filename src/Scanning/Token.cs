@@ -43,6 +43,8 @@ namespace PA_Final.Scanning
 		ID,
 		EDGE,
 
+		CLUSTER,
+
 		EOF
 	}
 }

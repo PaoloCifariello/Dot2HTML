@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<title>DOT Drawer</title>
+		<script type="text/javascript" src="DotGenerator.js"></script>
+	</head>
+	<body>
+		<canvas id="graphCanvas" width="800" height="600"></canvas>
+
+		<script>
+			var graph = DD.createGraph();
+graph.addNode("start", {
+});
+graph.addNode("end", {
+});
+graph.addEdge("start", "A", {
+})
+graph.addEdge("start", "B", {
+})
+graph.addEdge("A", "end", {
+})
+graph.addEdge("B", "end", {
+})
+DD.setDrawingCanvas("graphCanvas");
+DD.drawGraph(graph);
+		</script>
+	</body>
+</html>

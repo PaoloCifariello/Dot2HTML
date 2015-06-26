@@ -25,6 +25,7 @@ namespace PA_Final.Scanning
 
 		private static Entry[] reservedWords = new Entry[] {
 			new Entry ("graph", TokenType.GRAPH),
+			new Entry ("cluster", TokenType.CLUSTER)
 		};
 
 		public static string Match (string str, out Token nextToken)
