@@ -216,8 +216,4 @@
 			}
 		}
 	}
-
-	function onMouseMove(e) {
-
-	}
 })();

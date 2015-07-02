@@ -65,7 +65,6 @@
     <None Include="test\res\test2" />
     <None Include="src\HTML\Template.html" />
     <None Include="src\HTML\DotGenerator.js" />
-    <None Include="test\out\DotGenerator.js" />
     <None Include="test\res\test3" />
     <None Include="test\res\test4" />
   </ItemGroup>
