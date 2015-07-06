@@ -20,11 +20,12 @@
 		toNode.setLink(fromNode);
 	}
 	
-	function DotGraph() {
-		
+	function DotGraph(id) {
+
+		this.id = id;
 		this.nodes = [];
 		this.edges = [];
-		
+
 		this.addNode = function(nodeId, attributes) {
 			var node = new DotNode(nodeId, attributes);
 			this.nodes.push(node);
@@ -49,13 +50,30 @@
 				
 			this.edges.push(new DotEdge(fromNode, toNode, attributes));
 		};
+
+		this.addCluster = function(cluster) {
+			var self = this;
+			cluster.nodes.forEach(function(node) {
+				self.nodes.push(node);
+			});
+
+			cluster.edges.forEach(function(edge) {
+				self.edges.push(edge);
+			});
+
+			var clusterNode = new DotNode(cluster.id, {});
+			clusterNode.cluster = true;
+			clusterNode.nodes = cluster.nodes;
+
+			this.nodes.push(clusterNode)
+		};
 	}
 		
 	var drawingCanvasId;
 	var drawer = new Drawer();
 
-	DD.createGraph = function() {
-		return new DotGraph();
+	DD.createGraph = function(id) {
+		return new DotGraph(id);
 	};
 	
 	DD.setDrawingCanvas = function(canvasId) {
@@ -88,6 +106,9 @@
 
 		canvas.addEventListener('mousedown', function(e){
 			var selectedNodes = graph.nodes.filter(function(node) {
+				if (node.cluster)
+					return false;
+
 				var x = e.offsetX,
 					y = e.offsetY,
 					nodeX = node.position.x,
@@ -126,7 +147,7 @@
 			var self = this;
 
 			nodes.forEach(function(node, index) {
-				if (typeof node.position === 'undefined') {
+				if (typeof node.position === 'undefined' && !node.cluster) {
 					node.position = {
 						x: startingSlot.x * xStep,
 						y: startingSlot.y * yStep
@@ -141,6 +162,12 @@
 					startingSlot.x += 1;
 				}
 			});
+
+			nodes.forEach(function(node) {
+				if (node.cluster) {
+					node.position = node.nodes[0].position;
+				}
+			});
 		};
 
 		this.drawGraph = function(canvas, graph) {
@@ -153,8 +180,36 @@
 			});
 
 			graph.nodes.forEach(function(node) {
-				drawNode(ctx, node);
+				if (node.cluster) {
+					var nodes = node.nodes,
+						min = {x:nodes[0].position.x, y: nodes[0].position.y},
+						max = {x:nodes[0].position.x, y: nodes[0].position.y};
+
+
+					for (var i = 0; i < nodes.length; i++) {
+						if (nodes[i].position.x < min.x)
+							min.x = nodes[i].position.x;
+
+						if (nodes[i].position.y < min.y)
+							min.y = nodes[i].position.y;
+
+						if (nodes[i].position.x > max.x)
+							max.x = nodes[i].position.x;
+
+						if (nodes[i].position.y > max.y)
+							max.y = nodes[i].position.y;
+					}
+
+					ctx.rect(min.x - 40, min.y - 40, max.x - min.x + 80, max.y - min.y + 80);
+					ctx.stroke();
+				}
 			});
+
+			graph.nodes.forEach(function(node) {
+				if (!node.cluster)
+					drawNode(ctx, node);
+			});
+
 		};
 
 		function drawNode(ctx, node) {

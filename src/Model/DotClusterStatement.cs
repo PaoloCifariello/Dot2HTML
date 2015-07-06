@@ -11,6 +11,10 @@ namespace PA_Final.Model
 	{
 		private DotGraph graph;
 
+		public DotGraph Graph {
+			get { return graph; }
+		}
+
 		public DotClusterStatement (DotGraph subgrap)
 		{
 			this.graph = subgrap;

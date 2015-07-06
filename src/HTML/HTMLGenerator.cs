@@ -18,13 +18,13 @@ namespace PA_Final.HTML
 				"var graph = DD.createGraph();"
 			};
 
-			foreach (var nodeStatement in graph.GetStatements<DotNodeStatement>()) {
-				GenerateNodeCode (nodeStatement.Node, drawingCode);
+			foreach (var clusterStatement in graph.GetStatements<DotClusterStatement>()) {
+				drawingCode.Push (String.Format("var {0} = DD.createGraph(\"{1}\");", clusterStatement.Graph.ID, clusterStatement.Graph.ID));
+				GenerateNodeAndEdgeCode (clusterStatement.Graph.ID, clusterStatement.Graph, drawingCode);
+				drawingCode.Push (String.Format("graph.addCluster({0});", clusterStatement.Graph.ID));
 			}
 
-			foreach (var edgeStatement in graph.GetStatements<DotEdgeStatement>())
-				foreach (var edge in edgeStatement.Edges)
-					GenerateEdgeCode (edge, drawingCode);
+			GenerateNodeAndEdgeCode ("graph", graph, drawingCode);
 
 			drawingCode.Push ("DD.setDrawingCanvas(\"graphCanvas\");");
 			drawingCode.Push ("DD.drawGraph(graph);");
@@ -35,19 +35,30 @@ namespace PA_Final.HTML
 			return generatedCode;
 		}
 
-		private static void GenerateNodeCode (DotNode node, ArrayList<String> drawingCode)
+		private static void GenerateNodeAndEdgeCode(String graphName, DotGraph graph, ArrayList<String> drawingCode)
+		{
+			foreach (var nodeStatement in graph.GetStatements<DotNodeStatement>()) {
+				GenerateNodeCode (graphName, nodeStatement.Node, drawingCode);
+			}
+
+			foreach (var edgeStatement in graph.GetStatements<DotEdgeStatement>())
+				foreach (var edge in edgeStatement.Edges)
+					GenerateEdgeCode (graphName, edge, drawingCode);
+		}
+
+		private static void GenerateNodeCode (String graphName, DotNode node, ArrayList<String> drawingCode)
 		{
 			var nodeId = node.ID;
 			var attributesCode = GenerateAttributeCode (node.Attributes);
 
-			drawingCode.Push (String.Format ("graph.addNode(\"{0}\", {1});", nodeId, attributesCode));
+			drawingCode.Push (String.Format ("{0}.addNode(\"{1}\", {2});", graphName, nodeId, attributesCode));
 		}
 
-		private static void  GenerateEdgeCode (DotEdge edge, ArrayList<String> drawingCode)
+		private static void  GenerateEdgeCode (String graphName, DotEdge edge, ArrayList<String> drawingCode)
 		{
 			var attributesCode = GenerateAttributeCode (edge.Attributes);
 
-			drawingCode.Push (String.Format ("graph.addEdge(\"{0}\", \"{1}\", {2})", edge.FromNodeId, edge.ToNodeId, attributesCode));	
+			drawingCode.Push (String.Format ("{0}.addEdge(\"{1}\", \"{2}\", {3})", graphName, edge.FromNodeId, edge.ToNodeId, attributesCode));	
 		}
 
 		private static String GenerateAttributeCode (ArrayList<DotAttribute> attributes)
