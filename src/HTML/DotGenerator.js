@@ -252,8 +252,9 @@
 			ctx.stroke();
 
 			if (label) {
+				ctx.textAlign = 'left';
 				ctx.font = "15px serif";
-				ctx.fillText(label, 4 + (centerX1 + centerX2) / 2, 4 + (centerY1 + centerY2) / 2);
+				ctx.fillText(label, (centerX1 + centerX2) / 2, (centerY1 + centerY2) / 2);
 			}
 		}
 
