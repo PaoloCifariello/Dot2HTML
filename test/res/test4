@@ -1,15 +1,18 @@
 ﻿graph d {
 	start;
-    cluster A {
-		n1[label="A0"]; n2[label="A1"]; n3[label="A2"]; n1 -- n2 -- n3;
-	}
 
 	cluster B {
 		n4[label="B0"]; n5[label="B1"]; n6[label="B2"]; n4 -- n5 -- n6;
 	}
 
+    cluster A {
+		n1[label="A0"]; n2[label="A1"]; n3[label="A2"]; n1 -- n2 -- n3;
+	}
+
+
+
     end;
 
-    start -- A; start -- B;
     A -- end; B -- end;
+    start -- A; B -- start;
 }

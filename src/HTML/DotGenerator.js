@@ -164,9 +164,8 @@
 			});
 
 			nodes.forEach(function(node) {
-				if (node.cluster) {
+				if (node.cluster)
 					node.position = node.nodes[0].position;
-				}
 			});
 		};
 
@@ -176,33 +175,26 @@
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 			graph.edges.forEach(function(edge) {
-				drawEdge(ctx, edge);
+				if (edge.fromNode.cluster || edge.toNode.cluster) 
+					drawEdge(ctx, edge);
 			});
 
 			graph.nodes.forEach(function(node) {
 				if (node.cluster) {
-					var nodes = node.nodes,
-						min = {x:nodes[0].position.x, y: nodes[0].position.y},
-						max = {x:nodes[0].position.x, y: nodes[0].position.y};
+					var rect = getRectangle(node.nodes);
 
-
-					for (var i = 0; i < nodes.length; i++) {
-						if (nodes[i].position.x < min.x)
-							min.x = nodes[i].position.x;
-
-						if (nodes[i].position.y < min.y)
-							min.y = nodes[i].position.y;
-
-						if (nodes[i].position.x > max.x)
-							max.x = nodes[i].position.x;
-
-						if (nodes[i].position.y > max.y)
-							max.y = nodes[i].position.y;
-					}
-
-					ctx.rect(min.x - 40, min.y - 40, max.x - min.x + 80, max.y - min.y + 80);
+					ctx.beginPath();
+					ctx.fillStyle = "#000000";
+					ctx.rect(rect.x, rect.y, rect.w, rect.h);
 					ctx.stroke();
+					ctx.fillStyle = "#FFFFFF";
+					ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
 				}
+			});
+
+			graph.edges.forEach(function(edge) {
+				if (!edge.fromNode.cluster && !edge.toNode.cluster) 
+					drawEdge(ctx, edge);
 			});
 
 			graph.nodes.forEach(function(node) {
@@ -211,6 +203,33 @@
 			});
 
 		};
+
+		function getRectangle(nodes) {
+			var min = {x:nodes[0].position.x, y: nodes[0].position.y},
+				max = {x:nodes[0].position.x, y: nodes[0].position.y};
+
+
+			for (var i = 0; i < nodes.length; i++) {
+				if (nodes[i].position.x < min.x)
+					min.x = nodes[i].position.x;
+
+				if (nodes[i].position.y < min.y)
+					min.y = nodes[i].position.y;
+
+				if (nodes[i].position.x > max.x)
+					max.x = nodes[i].position.x;
+
+				if (nodes[i].position.y > max.y)
+					max.y = nodes[i].position.y;
+			}
+
+			return {
+				x: min.x - 40,
+				y: min.y - 40,
+				w: max.x - min.x + 80,
+				h: max.y - min.y + 80
+			};
+		}
 
 		function drawNode(ctx, node) {
 			var centerX = node.position.x, 
@@ -225,8 +244,8 @@
 			ctx.arc(centerX, centerY, node.radius, 0, 2 * Math.PI, false);
 			ctx.fillStyle = 'white';
 			ctx.lineWidth = 2;
-			ctx.fill();
 			ctx.stroke();
+			ctx.fill();
 
 			ctx.textAlign = 'center';
   			ctx.fillStyle = 'black';

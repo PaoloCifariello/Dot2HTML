@@ -58,7 +58,7 @@ namespace PA_Final.HTML
 		{
 			var attributesCode = GenerateAttributeCode (edge.Attributes);
 
-			drawingCode.Push (String.Format ("{0}.addEdge(\"{1}\", \"{2}\", {3})", graphName, edge.FromNodeId, edge.ToNodeId, attributesCode));	
+			drawingCode.Push (String.Format ("{0}.addEdge(\"{1}\", \"{2}\", {3});", graphName, edge.FromNodeId, edge.ToNodeId, attributesCode));	
 		}
 
 		private static String GenerateAttributeCode (ArrayList<DotAttribute> attributes)
